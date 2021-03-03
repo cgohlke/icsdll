@@ -1,0 +1,22 @@
+include LICENSE
+include README.rst
+include ics/ics.h
+include ics/ics_version.h
+include ics/ics.hpp
+include ics/ics.cpp
+include ics/nlsp.cpp
+include ics/rfft.cpp
+include ics/yxt.cpp
+include ics/dllmain.cpp
+# include ics/deconv.cpp
+# include ics/psf.cpp
+include icsdll/__init__.py
+include icsdll/icsdll.py
+exclude icsdll/*.dll
+# include tests/*.bin
+include tests/test_icsdll.py
+include test_apcf/test_apcf.cpp
+include test_imsd/test_imsd.cpp
+include test_ipcf/test_ipcf.cpp
+include test_lstics/test_lstics.cpp
+include test_rfft3d/test_rfft3d.cpp
