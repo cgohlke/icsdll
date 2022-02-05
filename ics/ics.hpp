@@ -2,7 +2,7 @@
 
 Common inlined functions for the ICS library.
 
-Copyright (c) 2016-2021, Christoph Gohlke
+Copyright (c) 2016-2022, Christoph Gohlke
 This source code is distributed under the BSD 3-Clause license.
 
 Refer to the header file 'ics.h' for documentation and license.
