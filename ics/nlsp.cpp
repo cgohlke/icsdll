@@ -2,7 +2,7 @@
 
 Implementation of fitting functions for the ICS library.
 
-Copyright (c) 2016-2021, Christoph Gohlke
+Copyright (c) 2016-2022, Christoph Gohlke
 This source code is distributed under the BSD 3-Clause license.
 
 Refer to the header file 'ics.h' for documentation and license.
@@ -23,7 +23,7 @@ Refer to the header file 'ics.h' for documentation and license.
 void
 nlsp_1dpcf(MKL_INT *m, MKL_INT *n, double *x, double *f, void *extra)
 {
-    nlsp_extra_t *e = (nlsp_extra_t *)extra;
+    nlsp_extra_t const *e = (nlsp_extra_t *)extra;
     const double *yy = (double *)e->y;  // function values
     const double *xx = (double *)e->x;  // x axis values and constants
 
