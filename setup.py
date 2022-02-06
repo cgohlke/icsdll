@@ -13,17 +13,15 @@ from distutils import ccompiler
 
 PACKAGE = 'icsdll'
 DLLNAME = 'ICSx64'
-INTELDIR = (
-    'C:/Program Files (x86)/IntelSWTools/compilers_and_libraries/windows'
-)
+ONEAPI_ROOT = os.environ['ONEAPI_ROOT']
 
 if (
     sys.platform != 'win32'
     or ('64 bit' not in sys.version)
     or sys.version_info[0] < 3
-    or sys.version_info[1] < 7
+    or sys.version_info[1] < 8
 ):
-    raise RuntimeError(PACKAGE + ' requires 64-bit Python>=3.7 for Windows')
+    raise RuntimeError(PACKAGE + ' requires 64-bit Python>=3.8 for Windows')
 
 with open(PACKAGE + '/icsdll.py') as fh:
     code = fh.read()
@@ -72,7 +70,7 @@ objects = compiler.compile(
     sources,
     'build',
     extra_preargs=['/EHsc', '/FD', '/DICS_EXPORTS', '/openmp', '/DICS_SIMFCS'],
-    include_dirs=['ics', INTELDIR + '/mkl/include'],
+    include_dirs=['ics', ONEAPI_ROOT + '/mkl/latest/include'],
 )
 
 compiler.link_shared_lib(
@@ -87,8 +85,7 @@ compiler.link_shared_lib(
         # 'libiomp5md',
     ],
     library_dirs=[
-        INTELDIR + '/mkl/lib/intel64_win',
-        INTELDIR + '/compiler/lib/intel64_win',
+        ONEAPI_ROOT + '/mkl/latest/lib/intel64',
     ],
 )
 
@@ -105,9 +102,9 @@ setup(
         'Source Code': 'https://github.com/cgohlke/icsdll',
         # 'Documentation': 'https://',
     },
-    python_requires='>=3.7',
-    install_requires=['numpy>=1.19.1'],
-    setup_requires=['setuptools>=18.0'],
+    python_requires='>=3.8',
+    install_requires=['numpy>=1.19.5'],
+    setup_requires=['setuptools>=19.0'],
     packages=[PACKAGE],
     package_data={PACKAGE: ['*.dll']},
     libraries=[('', {'sources': []})],  # sets ispurelib = False
@@ -122,8 +119,8 @@ setup(
         'Operating System :: Microsoft :: Windows',
         'Programming Language :: C',
         'Programming Language :: Python :: 3 :: Only',
-        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
     ],
 )
