@@ -1,7 +1,7 @@
 /* ics.h */
 
 /*
-Copyright (c) 2016-2021, Christoph Gohlke
+Copyright (c) 2016-2022, Christoph Gohlke
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -43,11 +43,11 @@ correlation spectroscopy.
 
 :License: BSD 3-Clause
 
-:Version: 2021.3.2
+:Version: 2022.2.6
 
 Requirements
 ------------
-* Intel Math Kernel Library 2020
+* Intel oneAPI Math Kernel Library 2022
 * Microsoft Visual Studio 2019
 
 Notes
@@ -59,6 +59,8 @@ mkl_intel_lp64.lib;mkl_core.lib;mkl_sequential.lib
 
 Revisions
 ---------
+2022.2.6
+  Switch to oneAPI MKL.
 2021.3.2
   Add deconvolution functions (WIP).
 2019.7.10
