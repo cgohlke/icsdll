@@ -5,8 +5,8 @@ ICSdll is a Python ctypes interface to the Image Correlation Spectroscopy
 Dynamic Link Library (ICSx64.dll) developed at the Laboratory for Fluorescence
 Dynamics (LFD) for the Globals for Images SimFCS software.
 
-ICSx64.dll is implemented in C++ using the Intel(r) Math Kernel Library and
-OpenMP. It provides functions and classes for the analysis of fluorescence
+ICSx64.dll is implemented in C++ using the Intel(r) oneAPI Math Kernel Library
+and OpenMP. It provides functions and classes for the analysis of fluorescence
 time series data:
 
 * 1D, 2D, and 3D auto- and cross-correlation
@@ -28,19 +28,21 @@ time series data:
 
 :License: BSD 3-Clause
 
-:Version: 2021.3.2
+:Version: 2022.2.6
 
 Requirements
 ------------
-* `CPython >= 3.7, 64-bit <https://www.python.org>`_
+* `CPython >= 3.8, 64-bit <https://www.python.org>`_
 * `Numpy 1.19.5 <https://pypi.org/project/numpy/>`_
-* `Intel(r) Math Kernel Library <https://software.intel.com/en-us/mkl>`_
+* `Intel(r) oneAPI Math Kernel Library <https://software.intel.com/mkl>`_
   (build)
 * `Visual Studio 2019 C++ compiler <https://visualstudio.microsoft.com/>`_
   (build)
 
 Revisions
 ---------
+2022.2.6
+    Rebuild package with oneAPI 2022.
 2021.3.2
     Rebuild package.
 2019.11.22
@@ -64,7 +66,7 @@ Refer to the C++ header file and source code for function signatures.
 
 References
 ----------
-1. `ipcf.ipynb <https://www.lfd.uci.edu/~gohlke/ipcf/>`_
+1. `ipcf.ipynb <https://github.com/cgohlke/ipcf.ipynb>`_
    Pair correlation function analysis of fluorescence fluctuations in
    big image time series using Python.
 2. `Globals for Images SimFCS <https://www.lfd.uci.edu/globals/>`_,
