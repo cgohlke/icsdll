@@ -5,7 +5,7 @@ Implementation of the rfft1d, rfft2d, and rfft3d classes for the ICS library.
 The rfft#d classes implement 1D, 2D, and 3D auto- and cross-correlation using
 the Intel MKL library.
 
-Copyright (c) 2016-2022, Christoph Gohlke
+Copyright (c) 2016-2023, Christoph Gohlke
 This source code is distributed under the BSD 3-Clause license.
 
 Refer to the header file 'ics.h' for documentation and license.
@@ -1066,8 +1066,8 @@ rfft3d::imsd(
     // h0 0 0
     for (ssize_t y = 0, i = 0; i < h0; y++, i++) {
         for (ssize_t x = 0, j = h1; j < n1_; x++, j++) {
-            To *pout =
-                (To *)((char *)out + (y + h0) * stridesout[0] + x * stridesout[1]);
+            To *pout = (To *)(
+                (char *)out + (y + h0) * stridesout[0] + x * stridesout[1]);
             anscf(
                 a_ + i * s0 + j * s1,
                 pout,
@@ -1083,8 +1083,8 @@ rfft3d::imsd(
     // 0 h1 0
     for (ssize_t y = 0, i = h0; i < n0_; y++, i++) {
         for (ssize_t x = 0, j = 0; j < h1; x++, j++) {
-            To *pout =
-                (To *)((char *)out + y * stridesout[0] + (x + h1) * stridesout[1]);
+            To *pout = (To *)(
+                (char *)out + y * stridesout[0] + (x + h1) * stridesout[1]);
             anscf(
                 a_ + i * s0 + j * s1,
                 pout,
@@ -1100,8 +1100,10 @@ rfft3d::imsd(
     // h0 h1 0
     for (ssize_t y = 0, i = 0; i < h0; y++, i++) {
         for (ssize_t x = 0, j = 0; j < h1; x++, j++) {
-            To *pout =
-                (To *)((char *)out + (y + h0) * stridesout[0] + (x + h1) * stridesout[1]);
+            To *pout = (To *)(
+                (char *)out
+                + (y + h0) * stridesout[0]
+                + (x + h1) * stridesout[1]);
             anscf(
                 a_ + i * s0 + j * s1,
                 pout,
