@@ -1,7 +1,7 @@
 /* ics.h */
 
 /*
-Copyright (c) 2016-2022, Christoph Gohlke
+Copyright (c) 2016-2023, Christoph Gohlke
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -35,23 +35,19 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 The ICS Dynamic Link Library implements functions and classes for image
 correlation spectroscopy.
 
-:Author:
-  `Christoph Gohlke <https://www.lfd.uci.edu/~gohlke/>`_
-
-:Organization:
-  Laboratory for Fluorescence Dynamics. University of California, Irvine
-
+:Author: `Christoph Gohlke <https://www.cgohlke.com>`_
 :License: BSD 3-Clause
-
-:Version: 2022.2.6
+:Version: 2023.1.6
 
 Requirements
 ------------
-* Intel oneAPI Math Kernel Library 2022
-* Microsoft Visual Studio 2019
+
+- Intel oneAPI Math Kernel Library 2022
+- Microsoft Visual Studio 2022
 
 Notes
 -----
+
 To use MKL threading, link to
 mkl_intel_lp64.lib;mkl_intel_thread.lib;mkl_core.lib;libiomp5md.lib
 else
@@ -59,46 +55,74 @@ mkl_intel_lp64.lib;mkl_core.lib;mkl_sequential.lib
 
 Revisions
 ---------
+
 2022.2.6
-  Switch to oneAPI MKL.
+
+- Use Visual Studio 2022.
+
+2022.2.6
+
+- Switch to oneAPI MKL.
+
 2021.3.2
-  Add deconvolution functions (WIP).
+
+- Add deconvolution functions (WIP).
+
 2019.7.10
-  API change for nlsp_solve_.
-  Fix Visual Studio 2019 compile error.
+
+- API change for nlsp_solve_.
+- Fix Visual Studio 2019 compile error.
+
 2018.7.18
-  Add function to fit diffusion to ipcf results.
-  Add nlsp solver and functions.
+
+- Add function to fit diffusion to ipcf results.
+- Add nlsp solver and functions.
+
 2017.11.29
-  Add and export psf_ functions.
-  Export fft2d library functions.
-2017.10.02
-  Add yxt_correct_bleaching_ functions.
-  Export yxt_apcf_ functions.
-  Add apcf function to yxt class.
-2017.08.15
-  Add radial helper function.
-  Export yxt_lstics_ and rfft3d_lstics_ functions.
-  Add lstics function to rfft3d and yxt classes.
-2017.02.10
-  Add yxt_subtract_immobile_ functions to subtract immobile fractions.
-2017.01.28
-  Add yxt_crosscorrelate_hf compatibility function for SimFCS.
-  Change float argument of yxt_pcf_ functions to double (breaking).
-  Rename yxt_crosscorrelate_ funtions to yxt_pcf_ (breaking).
-  Export yxt_imsd_ and rfft3d_imsd_ functions.
-  Add imsd function to rfft3d and yxt classes.
+
+- Add and export psf_ functions.
+- Export fft2d library functions.
+
+2017.10.2
+
+- Add yxt_correct_bleaching_ functions.
+- Export yxt_apcf_ functions.
+- Add apcf function to yxt class.
+
+2017.8.15
+
+- Add radial helper function.
+- Export yxt_lstics_ and rfft3d_lstics_ functions.
+- Add lstics function to rfft3d and yxt classes.
+
+2017.2.10
+
+- Add yxt_subtract_immobile_ functions to subtract immobile fractions.
+
+2017.1.28
+
+- Add yxt_crosscorrelate_hf compatibility function for SimFCS.
+- Change float argument of yxt_pcf_ functions to double (breaking).
+- Rename yxt_crosscorrelate_ funtions to yxt_pcf_ (breaking).
+- Export yxt_imsd_ and rfft3d_imsd_ functions.
+- Add imsd function to rfft3d and yxt classes.
+
 2016.12.30
-  Add symmetry speedups to yxt_crosscorrelate function.
-  Fix logbins function. Inputs (256, 9) and (32, 4) returned wrong results.
-  Simplify average function.
-  Disable OpenMP in debug build.
-  Add MKL implementations of rfft1d, rfft2d, and rfft3d.
-  Remove option to compile with fft2d.
-2016.06.22
-  Add npoints parameter to circle function.
-2016.06.10
-  Initial release.
+
+- Add symmetry speedups to yxt_crosscorrelate function.
+- Fix logbins function. Inputs (256, 9) and (32, 4) returned wrong results.
+- Simplify average function.
+- Disable OpenMP in debug build.
+- Add MKL implementations of rfft1d, rfft2d, and rfft3d.
+- Remove option to compile with fft2d.
+
+2016.6.22
+
+- Add npoints parameter to circle function.
+
+2016.6.10
+
+- Initial release.
 
 */
 
@@ -145,9 +169,8 @@ typedef ptrdiff_t ssize_t;
 #define ICS_VALUE_ERROR9 -209
 
 #define ICS_MODE_DEFAULT 0
-#define ICS_MODE_TIME \
-    1                  /* do not center correlation results in axis 0 (time) */
-#define ICS_MODE_FCS 2 /* normalize correlation results according to FCS */
+#define ICS_MODE_TIME 1  /* do not center correlation results in axis 0/time */
+#define ICS_MODE_FCS 2  /* normalize correlation results according to FCS */
 #define ICS_MODE_CC 4  /* allocate second buffer for cross correlation */
 
 #define ICS_AXIS0 1  /* do not center correlation results in axis 0 */
