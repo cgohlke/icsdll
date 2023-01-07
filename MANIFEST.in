@@ -1,5 +1,9 @@
+exclude *
+recursive-exclude * *
 include LICENSE
 include README.rst
+include MANIFEST.in
+include setup.py
 include ics/ics.h
 include ics/ics_version.h
 include ics/ics.hpp
@@ -12,7 +16,6 @@ include ics/dllmain.cpp
 # include ics/psf.cpp
 include icsdll/__init__.py
 include icsdll/icsdll.py
-exclude icsdll/*.dll
 # include tests/*.bin
 include tests/test_icsdll.py
 include test_apcf/test_apcf.cpp
