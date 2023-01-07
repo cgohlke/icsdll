@@ -1,6 +1,6 @@
 # test_icsdll.py
 
-# Copyright (c) 2016-2022, Christoph Gohlke
+# Copyright (c) 2016-2023, Christoph Gohlke
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -31,15 +31,7 @@
 
 """Unit tests for the image correlation spectroscopy library ICSx64.dll.
 
-:Author:
-  `Christoph Gohlke <https://www.lfd.uci.edu/~gohlke/>`_
-
-:Organization:
-  Laboratory for Fluorescence Dynamics. University of California, Irvine
-
-:License: BSD 3-Clause
-
-:Version: 2022.2.6
+:Version: 2023.1.6
 
 """
 
@@ -57,10 +49,13 @@ from numpy.testing import assert_array_equal, assert_allclose
 HERE = os.path.dirname(__file__) + '/'
 
 
-def test_versions(version='2022.2.6', apiversion='2022.2.6'):
+def test_versions(version='2023.1.6', apiversion='2023.1.6'):
     """Test versions match."""
-    assert icsdll.__version__ == version
+    ver = icsdll.__version__
+    assert ver == version
     assert API.VERSION == apiversion
+    assert ver in __doc__
+    assert ver in icsdll.__doc__
 
 
 def test_logbins():
@@ -965,13 +960,13 @@ if __name__ == '__main__':
 
         from matplotlib import pyplot
         import icsdll
-        from icsdll import *
+        from icsdll import *  # noqa
 
         runall()
     else:
         # run pytests
         import icsdll
-        from icsdll import *
+        from icsdll import *  # noqa
         import warnings
 
         # warnings.simplefilter('always')  # noqa
@@ -983,4 +978,26 @@ if __name__ == '__main__':
 else:
     # pytest
     import icsdll
-    from icsdll import *
+    from icsdll import (
+        API,
+        # IcsError,
+        rfftnd,
+        # xyt,
+        # nlsp,
+        yxt_ipcf,
+        yxt_apcf,
+        yxt_imsd,
+        yxt_lstics,
+        yxt_subtract_immobile,
+        yxt_correct_bleaching,
+        # yxt_dft,
+        # zyx_deconv,
+        ipcf_nlsp_1dpcf,
+        radial,
+        circle,
+        logbins,
+        bins2times,
+        points2distances,
+        # nextpow2,
+        numpy_correlate,
+    )
