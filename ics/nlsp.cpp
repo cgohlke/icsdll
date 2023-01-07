@@ -2,7 +2,7 @@
 
 Implementation of fitting functions for the ICS library.
 
-Copyright (c) 2016-2022, Christoph Gohlke
+Copyright (c) 2016-2023, Christoph Gohlke
 This source code is distributed under the BSD 3-Clause license.
 
 Refer to the header file 'ics.h' for documentation and license.
@@ -55,6 +55,7 @@ constraints.
 
 Parameters
 ----------
+
 model : int
     Select the objective function. One of `ICS_NLSP_`.
 shape : ssize_t*
@@ -164,6 +165,7 @@ nlsp::~nlsp()
 
 Parameters
 ----------
+
 iter1 : int
     Specifies the maximum number of iterations.
 iter2
@@ -173,7 +175,8 @@ eps : double*
 eps_jac : double
     Precision of the Jacobian matrix calculation.
 rs : double
-   Definition of initial size of the trust region (boundary of the trial step).
+    Definition of initial size of the trust region
+    (boundary of the trial step).
 
 */
 void
@@ -393,6 +396,7 @@ nlsp::eval(To *data, const ssize_t *strides)
 
 Parameters
 ----------
+
 iter : int
     Contains the current number of iterations.
 st_cr : int
@@ -400,8 +404,8 @@ st_cr : int
 r1 : double
     Contains the residual, (||y - f(x)||) given the initial x.
 r2 : double
-    Contains the final residual, that is, the value of the function (||y -
-f(x)||) of the final x resulting from the algorithm operation.
+    Contains the final residual, that is, the value of the function
+    (||y - f(x)||) of the final x resulting from the algorithm operation.
 
 */
 void
@@ -423,6 +427,7 @@ nlsp::get(MKL_INT *iter, MKL_INT *st_cr, double *r1, double *r2)
 
 Parameters
 ----------
+
 ipcf : Ti*
     Pointer to 4D array of cross correlation carpets at each pixel.
     The order of the axes is length, width, npoints, nbins.
@@ -463,8 +468,9 @@ stridesx : ssize_t*
     Pointer to 4 integers defining the strides of the `ix` array.
 ifx : To*
     Pointer to 4D output array of computed function values.
-    If not `average`, the array shape is (shape[0], shape[1], shape[2],
-shape[3]). If `average`, the array shape is (shape[0], shape[1], 1, shape[3]).
+    If not `average`, the array shape is
+    (shape[0], shape[1], shape[2], shape[3]).
+    If `average`, the array shape is (shape[0], shape[1], 1, shape[3]).
 stridesfx : ssize_t*
     Pointer to 4 integers defining the strides of the `ifx` array.
 status : Tx*
@@ -650,7 +656,10 @@ ipcf_nlsp_1dpcf(
                     if (bifx) {
                         // evaluate
                         worker->eval(
-                            (To *)(pifx + i * stridesfx[0] + j * stridesfx[1] + stridesfx[3]),
+                            (To *)(pifx
+                                   + i * stridesfx[0]
+                                   + j * stridesfx[1]
+                                   + stridesfx[3]),
                             &stridesfx[3]);  // skip first point
                     }
                     if (bix) {
@@ -681,8 +690,12 @@ ipcf_nlsp_1dpcf(
 
                 // non-average mode
                 for (ssize_t k = 0; k < shape[2]; k++) {
-                    const Ti *d =
-                        (Ti *)(pipcf + i * strides[0] + j * strides[1] + k * strides[2] + strides[3]);  // skip first point
+                    const Ti *d = (Ti *)(
+                        pipcf
+                        + i * strides[0]
+                        + j * strides[1]
+                        + k * strides[2]
+                        + strides[3]);  // skip first point
                     if (isnan(d[0])) {
                         // skip masked
                         continue;
@@ -709,7 +722,11 @@ ipcf_nlsp_1dpcf(
                     if (bifx) {
                         // evaluate
                         worker->eval(
-                            (To *)(pifx + i * stridesfx[0] + j * stridesfx[1] + k * stridesfx[2] + stridesfx[3]),
+                            (To *)(pifx
+                                   + i * stridesfx[0]
+                                   + j * stridesfx[1]
+                                   + k * stridesfx[2]
+                                   + stridesfx[3]),
                             &stridesfx[3]);  // skip first point
                     }
                     if (bix) {
