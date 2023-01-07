@@ -2,7 +2,7 @@
 
 Implementation of the yxt class for the ICS library.
 
-Copyright (c) 2016-2022, Christoph Gohlke
+Copyright (c) 2016-2023, Christoph Gohlke
 This source code is distributed under the BSD 3-Clause license.
 
 Refer to the header file 'ics.h' for documentation and license.
@@ -28,11 +28,12 @@ The size * sizeof(double) should fit comfortably into available memory.
 
 Parameters
 ----------
+
 size : ssize_t*
     Pointer to three integers specifying the sizes in y, x, and t dimensions
     of the data to be analyzed: [image length, image width, number time
-points]. The number of time points is clipped to the next lower or equal power
-of two.
+    points]. The number of time points is clipped to the next lower or equal
+    power of two.
 
 */
 yxt::yxt(const ssize_t *shape)
@@ -102,6 +103,7 @@ yxt::yxt_get_buffer(ssize_t *shape, ssize_t *strides)
 
 Parameters
 ----------
+
 data : Ti*
     Pointer to input 3D array.
     If NULL, the internal buffer is re-used.
@@ -274,7 +276,11 @@ yxt::ipcf(
             for (ssize_t x = 0; x < xmax - xmin; x++) {
                 for (ssize_t p = 0; p < npoints; p++) {
                     To *pout =
-                        (To *)((char *)out + y * outstrides[0] + x * outstrides[1] + p * outstrides[2]);
+                        (To *)(
+                            (char *)out
+                            + y * outstrides[0]
+                            + x * outstrides[1]
+                            + p * outstrides[2]);
                     pout[0] = 0.0;
                 }
             }
@@ -314,7 +320,11 @@ yxt::ipcf(
                         continue;
                     }
                     To *pout =
-                        (To *)((char *)out + (y - ymin) * outstrides[0] + (x - xmin) * outstrides[1] + p * outstrides[2]);
+                        (To *)(
+                            (char *)out
+                            + (y - ymin) * outstrides[0]
+                            + (x - xmin) * outstrides[1] +
+                            p * outstrides[2]);
                     if (pout[0] != 0.0) {
                         continue;  // already calculated
                     }
@@ -357,7 +367,11 @@ yxt::ipcf(
                     // reverse, average, normalize, and smooth second half of
                     // cross correlation curve
                     pout =
-                        (To *)((char *)out + (y2 - ymin) * outstrides[0] + (x2 - xmin) * outstrides[1] + p2 * outstrides[2]);
+                        (To *)(
+                            (char *)out
+                            + (y2 - ymin) * outstrides[0]
+                            + (x2 - xmin) * outstrides[1]
+                            + p2 * outstrides[2]);
                     anscf(
                         a,
                         pout,
@@ -388,6 +402,7 @@ series.
 
 Parameters
 ----------
+
 data : Ti*
     Pointer to input 3D array.
     If NULL, the internal buffer is re-used.
@@ -429,9 +444,13 @@ bins : ssize_t*
     returned.
 nbins : ssize_t
     Size of `bins` array. Must be less or equal than half size of the time
-axis. filter : double Factor to use for simple exponential smoothing of
-log-binned cross correlation curves. nthreads : int Number of OpenMP threads to
-use for parallelizing loops along the y axis. Set to zero for OpenMP default.
+    axis.
+filter : double
+    Factor to use for simple exponential smoothing of log-binned cross
+    correlation curves.
+nthreads : int
+    Number of OpenMP threads to use for parallelizing loops along the y axis.
+    Set to zero for OpenMP default.
     For each thread, a rfft3d instance is allocated, requiring
     (number time points)*(block length)*(block width)*sizeof(double) bytes.
 
@@ -566,7 +585,10 @@ yxt::imsd(
                         usechannel ? b_ + y * strides_[0] + x * strides_[1]
                                    : NULL;
                     To *pout =
-                        (To *)((char *)out + (y / block[2]) * outstrides[0] + (x / block[3]) * outstrides[1]);
+                        (To *)(
+                            (char *)out
+                            + (y / block[2]) * outstrides[0]
+                            + (x / block[3]) * outstrides[1]);
                     worker->imsd(
                         a,
                         b,
@@ -584,8 +606,10 @@ yxt::imsd(
                     for (ssize_t i = 0; i < block[0]; i++) {
                         for (ssize_t j = 0; j < block[1]; j++) {
                             for (ssize_t k = 0; k < nbins; k++) {
-                                *(To *)(pout + i * outstrides[2] + j * outstrides[3] + k * outstrides[4]) =
-                                    (To)0.0;
+                                *(To *)(pout
+                                        + i * outstrides[2]
+                                        + j * outstrides[3]
+                                        + k * outstrides[4]) = (To)0.0;
                             }
                         }
                     }
@@ -607,6 +631,7 @@ yxt::imsd(
 
 Parameters
 ----------
+
 data : Ti*
     Pointer to input 3D array.
     If NULL, the internal buffer is re-used.
@@ -635,12 +660,12 @@ maskmode : int32_t
 out : To*
     Pointer to 5D output array of 2D correlation functions at each region.
     The order of the axes is length, width, number of lines, line length,
-nbins. Should be initialized since not all sprites might be calculated.
+    nbins. Should be initialized since not all sprites might be calculated.
 outstrides : ssize_t*
     Pointer to 5 integers defining the strides of the `out` array.
 lines : ssize_t*
     Pointer to contiguous 3D array of coordinates defining the lines to
-analyze. The order of dimensions is: number of lines, line length, 2.
+    analyze. The order of dimensions is: number of lines, line length, 2.
 linesshape : ssize_t*
     Pointer to 3 integers defining the shape of the 3D lines array: number of
     lines, line length, 2. Line length must be a power of two.
@@ -657,11 +682,15 @@ bins : ssize_t*
     are returned.
 nbins : ssize_t
     Size of `bins` array. Must be less or equal than half size of the time
-axis. filter : double Factor to use for simple exponential smoothing of
-log-binned cross correlation curves. nthreads : int Number of OpenMP threads to
-use for parallelizing loops along the y axis. Set to zero for OpenMP default.
-    For each thread, a rfft2d instance is allocated,
-    requiring (number time points)*(line length)*sizeof(double) bytes.
+    axis.
+filter : double
+    Factor to use for simple exponential smoothing of log-binned cross
+    correlation curves.
+nthreads : int
+    Number of OpenMP threads to use for parallelizing loops along the y axis.
+    Set to zero for OpenMP default.
+    For each thread, a rfft2d instance is allocated, requiring
+    (number time points)*(line length)*sizeof(double) bytes.
 
 */
 template <typename Ti, typename Tm, typename To>
@@ -836,7 +865,11 @@ yxt::lstics(
                     // loop over lines
                     for (ssize_t i = 0; i < nlines; i++) {
                         To *pout =
-                            (To *)((char *)out + (y / block[2]) * outstrides[0] + (x / block[3]) * outstrides[1] + i * outstrides[2]);
+                            (To *)(
+                                (char *)out
+                                + (y / block[2]) * outstrides[0]
+                                + (x / block[3]) * outstrides[1]
+                                + i * outstrides[2]);
                         worker->lstics(
                             a,
                             b,
@@ -857,8 +890,10 @@ yxt::lstics(
                     for (ssize_t i = 0; i < nlines; i++) {
                         for (ssize_t j = 0; j < linelength; j++) {
                             for (ssize_t k = 0; k < nbins; k++) {
-                                *(To *)(pout + i * outstrides[2] + j * outstrides[3] + k * outstrides[4]) =
-                                    (To)0.0;
+                                *(To *)(pout
+                                        + i * outstrides[2]
+                                        + j * outstrides[3]
+                                        + k * outstrides[4]) = (To)0.0;
                             }
                         }
                     }
@@ -881,6 +916,7 @@ yxt::lstics(
 
 Parameters
 ----------
+
 data : Ti*
     Pointer to input 2D array.
     If NULL, the internal buffer is re-used.
@@ -904,7 +940,9 @@ bins : ssize_t*
     returned.
 nbins : ssize_t
     Size of `bins` array. Must be less or equal than half size of the time
-axis. autocorr : int (bool) If True, also calculate autocorrelation functions.
+    axis.
+autocorr : int (bool)
+    If True, also calculate autocorrelation functions.
 filter : double
     Factor to use for simple exponential smoothing of log-binned cross
     correlation curves.
@@ -996,8 +1034,9 @@ yxt::apcf(
             triangular_number_coordinates(xsize_, i, &i0, &i1, autocorr);
             // printf("%ti, %ti, %ti\n", i, i0, i1);
 
-            To *pout =
-                (To *)((char *)out + i0 * outstrides[0] + (i1 - xcorr) * outstrides[1]);
+            To *pout = (To *)(
+                (char *)out + i0 * outstrides[0] + (i1 - xcorr) * outstrides[1]
+            );
             const double *p0 = a_ + (i0 * strides_[1] * strides_[2]);
             const double *p1 = a_ + (i1 * strides_[1] * strides_[2]);
             const double scale = 1.0 / (p0[0] * p1[0]);
@@ -1023,8 +1062,9 @@ yxt::apcf(
             if (i0 != i1) {
                 // reverse, average, normalize, and smooth second half of cross
                 // correlation curve
-                pout =
-                    (To *)((char *)out + i1 * outstrides[0] + i0 * outstrides[1]);
+                pout = (To *)(
+                    (char *)out + i1 * outstrides[0] + i0 * outstrides[1]
+                );
                 anscf(
                     a,
                     pout,
@@ -1236,6 +1276,7 @@ should be discarded.
 
 Parameters
 ----------
+
 data : Ti*
     Pointer to input 3D array.
     If NULL, the internal buffer is re-used.
@@ -1243,11 +1284,10 @@ shape : ssize_t*
     Pointer to 3 integers defining the size of the data array in y, x, and t
     dimensions.
 strides : ssize_t*
-    Pointer to 3 integers defining the strides of the data array in y, x, and t
-    dimensions.
+    Pointer to 3 integers defining the strides of the data array in y, x, and
+    t dimensions.
     Strides are the number of bytes required in each dimension to advance from
-    one item
-    to the next within the dimension.
+    one item to the next within the dimension.
 mean : double*
     Pointer to 2D output array of mean intensities along time axis.
     Must be large enough to hold shape[0] * shape[1] * sizeof(double).
@@ -1321,7 +1361,9 @@ yxt_correct_bleaching(
                     ? (double)sumd / (double)sizet
                     : (double)(sumd / (int64_t)sizet);
             if (mean != NULL) {
-                *((double*)((char *)mean + y * meanstrides[0] + x * meanstrides[1])) = meand;
+                *((double*)(
+                    (char *)mean + y * meanstrides[0] + x * meanstrides[1])
+                ) = meand;
             }
             pdata = (char *)data + y * strides[0] + x * strides[1];
             for (ssize_t t = 0; t < sizet; t++) {
@@ -1341,6 +1383,7 @@ yxt_correct_bleaching(
 
 Parameters
 ----------
+
 data : Ti*
     Pointer to input 3D array (yxt). The DFT is computed for each pixel over
     the last dimension.
