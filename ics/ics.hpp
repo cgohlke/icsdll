@@ -2,7 +2,7 @@
 
 Common inlined functions for the ICS library.
 
-Copyright (c) 2016-2022, Christoph Gohlke
+Copyright (c) 2016-2023, Christoph Gohlke
 This source code is distributed under the BSD 3-Clause license.
 
 Refer to the header file 'ics.h' for documentation and license.
@@ -362,8 +362,10 @@ selected(
     }
 
     if (mode & ICS_MASK_CENTER) {
-        const Tm *m =
-            (Tm *)((char *)mask + (y + length / 2) * strides[0] + (x + width / 2) * strides[1]);
+        const Tm *m = (Tm *)(
+            (char *)mask
+            + (y + length / 2) * strides[0]
+            + (x + width / 2) * strides[1]);
         return m[0] != (Tm)0;
     }
 
