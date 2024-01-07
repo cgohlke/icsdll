@@ -2,7 +2,7 @@
 
 Common inlined functions for the ICS library.
 
-Copyright (c) 2016-2023, Christoph Gohlke
+Copyright (c) 2016-2024, Christoph Gohlke
 This source code is distributed under the BSD 3-Clause license.
 
 Refer to the header file 'ics.h' for documentation and license.
@@ -13,7 +13,7 @@ Refer to the header file 'ics.h' for documentation and license.
 #define MKL_ALIGN 64
 
 // Number of doubles to append to last dimension of FFT buffer
-// must be >=2 <= MKL_ALIGN/8 and divisable by 2
+// must be >=2 <= MKL_ALIGN/8 and divisible by 2
 #define MKL_ALIGN_D 8
 
 /* definitions implemented in ics.cpp */
