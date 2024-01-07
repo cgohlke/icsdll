@@ -2,18 +2,17 @@
 
 """Icsdll package setuptools script."""
 
-import os
-import sys
-import re
 import glob
+import os
+import re
+import sys
+from distutils import ccompiler
 
 from setuptools import setup
 
-from distutils import ccompiler
-
 PACKAGE = 'icsdll'
 DLLNAME = 'ICSx64'
-ONEAPI_ROOT = os.environ['ONEAPI_ROOT']
+ONEAPI_ROOT = os.environ.get('ONEAPI_ROOT', r'C:\PROGRA~2\Intel\oneAPI')
 
 if (
     sys.platform != 'win32'
@@ -105,9 +104,7 @@ else:
             # 'mkl_intel_thread',
             # 'libiomp5md',
         ],
-        library_dirs=[
-            ONEAPI_ROOT + '/mkl/latest/lib/intel64',
-        ],
+        library_dirs=[ONEAPI_ROOT + '/mkl/latest/lib'],
     )
 
 setup(
@@ -123,7 +120,7 @@ setup(
         'Source Code': 'https://github.com/cgohlke/icsdll',
         # 'Documentation': 'https://',
     },
-    python_requires='>=3.8',
+    python_requires='>=3.9',
     install_requires=['numpy'],
     setup_requires=['setuptools>=19.0'],
     packages=[PACKAGE],
@@ -140,9 +137,9 @@ setup(
         'Operating System :: Microsoft :: Windows',
         'Programming Language :: C',
         'Programming Language :: Python :: 3 :: Only',
-        'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
     ],
 )
