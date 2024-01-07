@@ -2,7 +2,7 @@
 
 Implementation of the yxt class for the ICS library.
 
-Copyright (c) 2016-2023, Christoph Gohlke
+Copyright (c) 2016-2024, Christoph Gohlke
 This source code is distributed under the BSD 3-Clause license.
 
 Refer to the header file 'ics.h' for documentation and license.
@@ -335,7 +335,7 @@ yxt::ipcf(
                     // (MKL_Complex16*)a, VML_EP | VML_FTZDAZ_ON |
                     // VML_ERRMODE_IGNORE);
                     complex_multiply(a, point, origin, tsize_ + 2);
-                    // compute invers DFT
+                    // compute inverse DFT
                     DftiComputeBackward(dfti_handle, a);
                     // average, normalize, and smooth first half of cross
                     // correlation curve
@@ -408,8 +408,8 @@ data : Ti*
     If NULL, the internal buffer is re-used.
     Averages along time axis should not be zero, i.e. do not subtract the mean.
 strides : ssize_t*
-    Pointer to 3 integers defining the strides of the data array in y, x, and t
-    dimensions.
+    Pointer to 3 integers defining the strides of the data array in y, x, and
+    t dimensions.
     Strides are the number of bytes required in each dimension to advance from
     one item to the next within the dimension.
 data1 : Ti*
@@ -440,8 +440,8 @@ block : ssize_t*
 bins : ssize_t*
     Pointer to the output of logbins() used to bin cross correlation curves.
     The last item should be half of the internal buffer shape[2].
-    If NULL, the first `nbins` planes from the cross correlation functions are
-    returned.
+    If NULL, the first `nbins` planes from the cross correlation functions
+    are returned.
 nbins : ssize_t
     Size of `bins` array. Must be less or equal than half size of the time
     axis.
@@ -936,8 +936,8 @@ outstrides : ssize_t*
 bins : ssize_t*
     Pointer to the output of logbins() used to bin cross correlation curves.
     The last item should be half of the internal buffer shape[2].
-    If NULL, the first `nbins` samples from the cross correlation functions are
-    returned.
+    If NULL, the first `nbins` samples from the cross correlation functions
+    are returned.
 nbins : ssize_t
     Size of `bins` array. Must be less or equal than half size of the time
     axis.
@@ -1030,7 +1030,7 @@ yxt::apcf(
             if (a == NULL)
                 continue;
 
-            ssize_t i0, i1;  // indicees of detectors
+            ssize_t i0, i1;  // indices of detectors
             triangular_number_coordinates(xsize_, i, &i0, &i1, autocorr);
             // printf("%ti, %ti, %ti\n", i, i0, i1);
 
@@ -1044,7 +1044,7 @@ yxt::apcf(
             // multiply detector0 DFT by complex conjugate of detector1 DFT and
             // store in a
             complex_multiply(a, p0, p1, tsize_ + 2);
-            // compute invers DFT
+            // compute inverse DFT
             DftiComputeBackward(dfti_handle, a);
             // average, normalize, and smooth first half of cross correlation
             // curve
@@ -1448,7 +1448,7 @@ yxt_dft(
     const ssize_t sizex = shape[1];
     const ssize_t sizet = shape[2];
     const ssize_t sizef = outshape[2];
-    const ssize_t stridet = strides[2];
+    // const ssize_t stridet = strides[2];
 
     // initialize MKL for 1D in-place DFT
     DFTI_DESCRIPTOR_HANDLE dfti_handle;
