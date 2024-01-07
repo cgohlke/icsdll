@@ -1,6 +1,6 @@
 # icsdll.py
 
-# Copyright (c) 2016-2023, Christoph Gohlke
+# Copyright (c) 2016-2024, Christoph Gohlke
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -51,7 +51,7 @@ time series data:
 
 :Author: `Christoph Gohlke <https://www.cgohlke.com>`_
 :License: BSD 3-Clause
-:Version: 2023.1.6
+:Version: 2024.1.6
 
 Requirements
 ------------
@@ -59,15 +59,19 @@ Requirements
 This revision was tested with the following requirements and dependencies
 (other versions may work):
 
-- `CPython 3.8.10, 3.9.13, 3.10.9, 3.11.1, 64-bit <https://www.python.org>`_
-- `Numpy 1.23.5 <https://pypi.org/project/numpy/>`_
-- `Intel(r) oneAPI Math Kernel Library 2022.2.1
-  <https://software.intel.com/mkl>`_  (build)
+- `CPython <https://www.python.org>`_ 3.9.13, 3.10.9, 3.11.7, 3.12.1, 64-bit
+- `Numpy <https://pypi.org/project/numpy/>`_ 1.26.3
+- `Intel(r) oneAPI Math Kernel Library <https://software.intel.com/mkl>`_
+  2024.0.0 (build)
 - `Visual Studio 2022 C++ compiler <https://visualstudio.microsoft.com/>`_
   (build)
 
 Revisions
 ---------
+
+2024.1.6
+
+- Rebuild package with oneAPI MKL 2024.0.0.
 
 2023.1.6
 
@@ -120,7 +124,7 @@ References
 
 """
 
-__version__ = '2023.1.6'
+__version__ = '2024.1.6'
 
 __all__ = [
     'API',
@@ -146,9 +150,9 @@ __all__ = [
     'numpy_correlate',
 ]
 
-import os
-import math
 import ctypes
+import math
+import os
 import warnings
 
 import numpy
@@ -157,15 +161,15 @@ import numpy
 def API(dllname=None):
     """Return ctypes interface to functions of ICSx64 DLL."""
     from ctypes import (
+        POINTER,
+        c_char_p,
+        c_double,
+        c_float,
         c_int,
         c_int32,
         c_int64,
         c_size_t,
         c_ssize_t,
-        c_double,
-        c_float,
-        c_char_p,
-        POINTER,
     )
 
     c_ssize_t_p = POINTER(c_ssize_t)
@@ -342,7 +346,6 @@ def API(dllname=None):
     api.yxt_get_buffer.argtypes = [handle_t, c_ssize_t_p, c_ssize_t_p]
 
     for ti, to in outer('dfihH', 'df'):
-
         # yxt_ipcf_*
         func = getattr(api, f'yxt_ipcf_{ti}{to}')
         setattr(func, 'restype', c_int)
