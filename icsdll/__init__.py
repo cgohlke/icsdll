@@ -1,4 +1,4 @@
 # icsdll/__init__.py
 
-from .icsdll import __doc__, __all__, __version__
 from .icsdll import *
+from .icsdll import __all__, __doc__, __version__
