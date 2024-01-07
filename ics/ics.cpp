@@ -2,7 +2,7 @@
 
 Implementation of functions for the ICS library.
 
-Copyright (c) 2016-2023, Christoph Gohlke
+Copyright (c) 2016-2024, Christoph Gohlke
 This source code is distributed under the BSD 3-Clause license.
 
 Refer to the header file 'ics.h' for documentation and license.
@@ -99,6 +99,7 @@ npoints : ssize_t
     Number of circular points/angles to compute.
     If zero, a circle is "drawn" using 4 * floor(sqrt(2) * radius + 0.5)
     points.
+
 */
 ssize_t
 circle(const ssize_t radius, ssize_t *points, ssize_t npoints)
@@ -241,6 +242,7 @@ offset : double*
 mode : int
     Defines if line segments are radius (ICS_RADIUS 1) or diameter
     (ICS_DIAMETER 2).
+
 */
 ssize_t
 radial(
