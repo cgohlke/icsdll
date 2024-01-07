@@ -1,7 +1,7 @@
 /* ics.h */
 
 /*
-Copyright (c) 2016-2023, Christoph Gohlke
+Copyright (c) 2016-2024, Christoph Gohlke
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,7 +37,7 @@ correlation spectroscopy.
 
 :Author: `Christoph Gohlke <https://www.cgohlke.com>`_
 :License: BSD 3-Clause
-:Version: 2023.1.6
+:Version: 2024.1.6
 
 Requirements
 ------------
@@ -56,7 +56,11 @@ mkl_intel_lp64.lib;mkl_core.lib;mkl_sequential.lib
 Revisions
 ---------
 
-2022.2.6
+2023.1.6
+
+- Switch to oneAPI MKL 2024.0.0.
+
+2023.1.6
 
 - Use Visual Studio 2022.
 
@@ -103,7 +107,7 @@ Revisions
 
 - Add yxt_crosscorrelate_hf compatibility function for SimFCS.
 - Change float argument of yxt_pcf_ functions to double (breaking).
-- Rename yxt_crosscorrelate_ funtions to yxt_pcf_ (breaking).
+- Rename yxt_crosscorrelate_ functions to yxt_pcf_ (breaking).
 - Export yxt_imsd_ and rfft3d_imsd_ functions.
 - Add imsd function to rfft3d and yxt classes.
 
@@ -169,7 +173,7 @@ typedef ptrdiff_t ssize_t;
 #define ICS_VALUE_ERROR9 -209
 
 #define ICS_MODE_DEFAULT 0
-#define ICS_MODE_TIME 1  /* do not center correlation results in axis 0/time */
+#define ICS_MODE_TIME 1 /* do not center correlation results in axis 0/time */
 #define ICS_MODE_FCS 2  /* normalize correlation results according to FCS */
 #define ICS_MODE_CC 4  /* allocate second buffer for cross correlation */
 
