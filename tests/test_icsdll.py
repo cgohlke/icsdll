@@ -1,6 +1,6 @@
 # test_icsdll.py
 
-# Copyright (c) 2016-2023, Christoph Gohlke
+# Copyright (c) 2016-2024, Christoph Gohlke
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -31,25 +31,24 @@
 
 """Unit tests for the image correlation spectroscopy library ICSx64.dll.
 
-:Version: 2023.1.6
+:Version: 2024.1.6
 
 """
 
-import sys
-import os
 import math
+import os
+import sys
 import time
 from contextlib import contextmanager
 
-import pytest
 import numpy
-
-from numpy.testing import assert_array_equal, assert_allclose
+import pytest
+from numpy.testing import assert_allclose, assert_array_equal
 
 HERE = os.path.dirname(__file__) + '/'
 
 
-def test_versions(version='2023.1.6', apiversion='2023.1.6'):
+def test_versions(version='2024.1.6', apiversion='2024.1.6'):
     """Test versions match."""
     ver = icsdll.__version__
     assert ver == version
@@ -958,16 +957,17 @@ if __name__ == '__main__':
         # running in IDE
         sys.path = ['..'] + sys.path
 
-        from matplotlib import pyplot
         import icsdll
         from icsdll import *  # noqa
+        from matplotlib import pyplot
 
         runall()
     else:
         # run pytests
+        import warnings
+
         import icsdll
         from icsdll import *  # noqa
-        import warnings
 
         # warnings.simplefilter('always')  # noqa
         warnings.filterwarnings('ignore', category=ImportWarning)  # noqa
@@ -978,26 +978,20 @@ if __name__ == '__main__':
 else:
     # pytest
     import icsdll
-    from icsdll import (
+    from icsdll import (  # IcsError,; xyt,; nlsp,; yxt_dft,; zyx_deconv,; nextpow2,
         API,
-        # IcsError,
+        bins2times,
+        circle,
+        ipcf_nlsp_1dpcf,
+        logbins,
+        numpy_correlate,
+        points2distances,
+        radial,
         rfftnd,
-        # xyt,
-        # nlsp,
-        yxt_ipcf,
         yxt_apcf,
+        yxt_correct_bleaching,
         yxt_imsd,
+        yxt_ipcf,
         yxt_lstics,
         yxt_subtract_immobile,
-        yxt_correct_bleaching,
-        # yxt_dft,
-        # zyx_deconv,
-        ipcf_nlsp_1dpcf,
-        radial,
-        circle,
-        logbins,
-        bins2times,
-        points2distances,
-        # nextpow2,
-        numpy_correlate,
     )
