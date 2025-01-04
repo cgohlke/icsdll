@@ -2,7 +2,7 @@
 
 Implementation of the yxt class for the ICS library.
 
-Copyright (c) 2016-2024, Christoph Gohlke
+Copyright (c) 2016-2025, Christoph Gohlke
 This source code is distributed under the BSD 3-Clause license.
 
 Refer to the header file 'ics.h' for documentation and license.
