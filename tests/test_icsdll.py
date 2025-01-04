@@ -1,6 +1,6 @@
 # test_icsdll.py
 
-# Copyright (c) 2016-2024, Christoph Gohlke
+# Copyright (c) 2016-2025, Christoph Gohlke
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,7 @@
 
 """Unit tests for the image correlation spectroscopy library ICSx64.dll.
 
-:Version: 2024.1.6
+:Version: 2025.1.6
 
 """
 
@@ -48,7 +48,7 @@ from numpy.testing import assert_allclose, assert_array_equal
 HERE = os.path.dirname(__file__) + '/'
 
 
-def test_versions(version='2024.1.6', apiversion='2024.1.6'):
+def test_versions(version='2025.1.6', apiversion='2025.1.6'):
     """Test versions match."""
     ver = icsdll.__version__
     assert ver == version
@@ -544,7 +544,7 @@ def test_rfftnd_threads():
     from concurrent.futures import ThreadPoolExecutor
     from multiprocessing import cpu_count
 
-    cpu_count = cpu_count() // 2
+    cpucount = cpu_count() // 2
 
     shape = 256, 256, 256
     a = numpy.random.rand(*shape)
@@ -557,8 +557,8 @@ def test_rfftnd_threads():
 
     c = numpy_correlate(a, a, mode=0)
     with timer('rfftnd.autocorrelate threads'):
-        with ThreadPoolExecutor(cpu_count) as executor:
-            result = list(executor.map(function, [a] * cpu_count))
+        with ThreadPoolExecutor(cpucount) as executor:
+            result = list(executor.map(function, [a] * cpucount))
     for r in result:
         assert numpy.allclose(c, r)
 
@@ -829,7 +829,7 @@ def test_yxt_correct_bleaching(dtype='int16', smooth=0.99, nthreads=0):
         mean = yxt_correct_bleaching(corrected, smooth, nthreads)
 
     if 0:
-        pyplot.imshow(mean)
+        pyplot.imshow(mean)  # type: ignore[unreachable]
         pyplot.figure()
         pyplot.plot(data[:, 10, 10])
         pyplot.plot(corrected[10, 10])
@@ -850,10 +850,11 @@ def test_yxt_correct_bleaching(dtype='int16', smooth=0.99, nthreads=0):
     assert numpy.allclose(mean, mean_np)
 
 
+@pytest.mark.xfail(
+    True, reason='results depend on compiler version, MKL version'
+)
 def test_ipcf_nlsp_1dpcf():
     """Test ipcf_nlsp_1dpcf function."""
-    if sys.version_info < (3, 7):
-        pytest.xfail('results depend on compiler version')
     ipcf = numpy.fromfile(
         HERE + 'Simulation_Channel.ipcf.bin', dtype='float32'
     )
@@ -920,7 +921,7 @@ def test_yxt_dft():
         expected = numpy.fft.fft(data, axis=0).astype('complex64')
 
     atol = 1e-6
-    assert_allclose(result[0], expected[0].real)
+    assert_allclose(result[0], expected[0].real, atol=atol)
     assert_allclose(result[1], expected[1].real, atol=atol)
     assert_allclose(result[2], expected[1].imag, atol=atol)
     assert_allclose(result[3], expected[2].real, atol=atol)
@@ -995,3 +996,7 @@ else:
         yxt_lstics,
         yxt_subtract_immobile,
     )
+
+
+# mypy: allow-untyped-defs, allow-untyped-calls
+# mypy: disable-error-code="attr-defined"
