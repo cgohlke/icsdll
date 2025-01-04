@@ -1,7 +1,7 @@
 /* ics.h */
 
 /*
-Copyright (c) 2016-2024, Christoph Gohlke
+Copyright (c) 2016-2025, Christoph Gohlke
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,12 +37,12 @@ correlation spectroscopy.
 
 :Author: `Christoph Gohlke <https://www.cgohlke.com>`_
 :License: BSD 3-Clause
-:Version: 2024.1.6
+:Version: 2025.1.6
 
 Requirements
 ------------
 
-- Intel oneAPI Math Kernel Library 2022
+- Intel oneAPI Math Kernel Library 2025
 - Microsoft Visual Studio 2022
 
 Notes
@@ -56,9 +56,13 @@ mkl_intel_lp64.lib;mkl_core.lib;mkl_sequential.lib
 Revisions
 ---------
 
-2023.1.6
+2025.1.6
 
-- Switch to oneAPI MKL 2024.0.0.
+- Upgrade to oneAPI MKL 2025.
+
+2024.1.6
+
+- Upgrade to oneAPI MKL 2024.
 
 2023.1.6
 
