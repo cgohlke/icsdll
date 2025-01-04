@@ -1,6 +1,6 @@
 # icsdll.py
 
-# Copyright (c) 2016-2024, Christoph Gohlke
+# Copyright (c) 2016-2025, Christoph Gohlke
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -51,7 +51,7 @@ time series data:
 
 :Author: `Christoph Gohlke <https://www.cgohlke.com>`_
 :License: BSD 3-Clause
-:Version: 2024.1.6
+:Version: 2025.1.6
 
 Requirements
 ------------
@@ -59,15 +59,20 @@ Requirements
 This revision was tested with the following requirements and dependencies
 (other versions may work):
 
-- `CPython <https://www.python.org>`_ 3.9.13, 3.10.9, 3.11.7, 3.12.1, 64-bit
-- `Numpy <https://pypi.org/project/numpy/>`_ 1.26.3
+- `CPython <https://www.python.org>`_ 3.10.11, 3.11.9, 3.12.8, 3.13.1 64-bit
+- `Numpy <https://pypi.org/project/numpy>`_ 2.2.1
 - `Intel(r) oneAPI Math Kernel Library <https://software.intel.com/mkl>`_
-  2024.0.0 (build)
+  2025.0 (build)
 - `Visual Studio 2022 C++ compiler <https://visualstudio.microsoft.com/>`_
   (build)
 
 Revisions
 ---------
+
+2025.1.6
+
+- Support Python 3.13 and numpy 2.
+- Rebuild package with oneAPI MKL 2025.0.
 
 2024.1.6
 
@@ -124,9 +129,12 @@ References
 
 """
 
-__version__ = '2024.1.6'
+from __future__ import annotations
+
+__version__ = '2025.1.6'
 
 __all__ = [
+    '__version__',
     'API',
     'IcsError',
     'rfftnd',
@@ -181,7 +189,9 @@ def API(dllname=None):
 
     api = ctypes.CDLL(dllname)
 
-    api.VERSION = c_char_p.in_dll(api, 'ICS_VERSION').value.decode('ascii')
+    version = c_char_p.in_dll(api, 'ICS_VERSION').value
+    assert version is not None
+    api.VERSION = version.decode('ascii')
 
     api.MODE_FCS = 2
     api.MODE_CC = 4
@@ -249,7 +259,7 @@ def API(dllname=None):
                 return param
             return from_param_(param)
 
-        cls.from_param = classmethod(from_param)
+        cls.from_param = classmethod(from_param)  # type: ignore
         return cls
 
     def outer(a, b, skip=tuple()):
@@ -514,7 +524,7 @@ def API(dllname=None):
 
     # zyx_deconv
     try:
-        for ti, to in ('ff', 'dd', 'Hf'):  # outer('fH', 'f'):
+        for ti, to in (('f', 'f'), ('d', 'd'), ('H', 'f')):  # outer('fH', 'f')
             func = getattr(api, f'zyx_deconv_{ti}{to}')
             setattr(func, 'restype', c_int)
             setattr(
@@ -1487,3 +1497,7 @@ def product(iterable):
     for i in iterable:
         prod *= i
     return prod
+
+
+# mypy: allow-untyped-defs, allow-untyped-calls
+# mypy: disable-error-code="attr-defined"
