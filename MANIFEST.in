@@ -3,6 +3,7 @@ recursive-exclude * *
 include LICENSE
 include README.rst
 include MANIFEST.in
+include pyproject.toml
 include setup.py
 include ics/ics.h
 include ics/ics_version.h
@@ -17,6 +18,7 @@ include ics/dllmain.cpp
 include icsdll/__init__.py
 include icsdll/icsdll.py
 # include tests/*.bin
+include tests/conftest.py
 include tests/test_icsdll.py
 include test_apcf/test_apcf.cpp
 include test_imsd/test_imsd.cpp
