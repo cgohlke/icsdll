@@ -6,12 +6,10 @@ import glob
 import os
 import re
 import sys
-from distutils import ccompiler
 
 from setuptools import setup
+from setuptools._distutils import ccompiler
 
-PACKAGE = 'icsdll'
-DLLNAME = 'ICSx64'
 ONEAPI_ROOT = os.environ.get('ONEAPI_ROOT', r'C:\PROGRA~2\Intel\oneAPI')
 
 if (
@@ -20,10 +18,10 @@ if (
     or sys.version_info[0] < 3
     or sys.version_info[1] < 10
 ):
-    raise RuntimeError(PACKAGE + ' requires 64-bit Python>=3.10 for Windows')
+    raise RuntimeError('icsdll requires 64-bit Python>=3.11 for Windows')
 
 
-def search(pattern, string, flags=0):
+def search(pattern: str, string: str, flags: int = 0) -> str:
     """Return first match of pattern in string."""
     match = re.search(pattern, string, flags)
     if match is None:
@@ -31,7 +29,7 @@ def search(pattern, string, flags=0):
     return match.groups()[0]
 
 
-def fix_docstring_examples(docstring):
+def fix_docstring_examples(docstring: str) -> str:
     """Return docstring with examples fixed for GitHub."""
     start = True
     indent = False
@@ -49,7 +47,7 @@ def fix_docstring_examples(docstring):
     return '\n'.join(lines)
 
 
-with open(PACKAGE + '/icsdll.py', encoding='utf-8') as fh:
+with open('icsdll/icsdll.py', encoding='utf-8') as fh:
     code = fh.read()
 
 version = search(r"__version__ = '(.*?)'", code).replace('.x.x', '.dev0')
@@ -80,13 +78,13 @@ if 'sdist' in sys.argv:
     license = license.replace('# ', '').replace('#', '')
 
     with open('LICENSE', 'w', encoding='utf-8') as fh:
-        fh.write('BSD 3-Clause License\n\n')
+        fh.write('BSD-3-Clause license\n\n')
         fh.write(license)
 
 else:
     # build DLL
 
-    for f in glob.glob(os.path.join(PACKAGE, DLLNAME + '.*')):
+    for f in glob.glob(os.path.join('icsdll', 'ICSx64.*')):
         try:
             os.remove(f)
         except Exception:
@@ -113,7 +111,7 @@ else:
 
     compiler.link_shared_lib(
         objects,
-        os.path.join(PACKAGE, DLLNAME),
+        os.path.join('icsdll', 'ICSx64'),
         extra_preargs=['/DLL'],
         libraries=[
             'mkl_core',
@@ -126,10 +124,11 @@ else:
     )
 
 setup(
-    name=PACKAGE,
+    name='icsdll',
     version=version,
     description=description,
     long_description=readme,
+    long_description_content_type='text/x-rst',
     author='Christoph Gohlke',
     author_email='cgohlke@cgohlke.com',
     url='https://www.cgohlke.com',
@@ -138,25 +137,24 @@ setup(
         'Source Code': 'https://github.com/cgohlke/icsdll',
         # 'Documentation': 'https://',
     },
-    python_requires='>=3.10',
+    python_requires='>=3.11',
     install_requires=['numpy'],
-    packages=[PACKAGE],
-    package_data={PACKAGE: [f'{DLLNAME}.dll', '*.dll']},
+    packages=['icsdll'],
+    package_data={'icsdll': ['ICSx64.dll', '*.dll']},
     libraries=[('', {'sources': []})],  # sets ispurelib = False
-    license='BSD',
+    license='BSD-3-Clause',
     zip_safe=False,
     platforms=['Windows'],
     classifiers=[
         'Development Status :: 3 - Alpha',
-        'License :: OSI Approved :: BSD License',
         'Intended Audience :: Science/Research',
         'Intended Audience :: Developers',
         'Operating System :: Microsoft :: Windows',
         'Programming Language :: C',
         'Programming Language :: Python :: 3 :: Only',
-        'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
         'Programming Language :: Python :: 3.12',
         'Programming Language :: Python :: 3.13',
+        'Programming Language :: Python :: 3.14',
     ],
 )
