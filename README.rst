@@ -24,7 +24,7 @@ time series data:
 
 :Author: `Christoph Gohlke <https://www.cgohlke.com>`_
 :License: BSD 3-Clause
-:Version: 2025.1.6
+:Version: 2025.8.8
 
 Requirements
 ------------
@@ -32,15 +32,20 @@ Requirements
 This revision was tested with the following requirements and dependencies
 (other versions may work):
 
-- `CPython <https://www.python.org>`_ 3.10.11, 3.11.9, 3.12.8, 3.13.1 64-bit
-- `Numpy <https://pypi.org/project/numpy>`_ 2.2.1
+- `CPython <https://www.python.org>`_ 3.11.9, 3.12.10, 3.13.6 3.14.0rc 64-bit
+- `Numpy <https://pypi.org/project/numpy>`_ 2.3.2
 - `Intel(r) oneAPI Math Kernel Library <https://software.intel.com/mkl>`_
-  2025.0 (build)
+  2025.2 (build)
 - `Visual Studio 2022 C++ compiler <https://visualstudio.microsoft.com/>`_
   (build)
 
 Revisions
 ---------
+
+2025.8.8
+
+- Support Python 3.14.
+- Rebuild package with oneAPI MKL 2025.2.
 
 2025.1.6
 
