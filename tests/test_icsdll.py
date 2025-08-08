@@ -31,7 +31,7 @@
 
 """Unit tests for the image correlation spectroscopy library ICSx64.dll.
 
-:Version: 2025.1.6
+:Version: 2025.8.8
 
 """
 
@@ -48,7 +48,7 @@ from numpy.testing import assert_allclose, assert_array_equal
 HERE = os.path.dirname(__file__) + '/'
 
 
-def test_versions(version='2025.1.6', apiversion='2025.1.6'):
+def test_versions(version='2025.8.8', apiversion='2025.1.6'):
     """Test versions match."""
     ver = icsdll.__version__
     assert ver == version
